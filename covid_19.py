@@ -7,6 +7,8 @@ st.title('Covid 19, a worldwide analysis')
 st.text('Source: Johns Hopkins University')
 st.text('Clear cache from menu in upper-right corner for updating data')
 
+st.markdown('View source code [here](https://github.com/chauhannaman98/covid-19) on GitHub')
+
 covid = Covid()
 
 countries = covid.list_countries()
