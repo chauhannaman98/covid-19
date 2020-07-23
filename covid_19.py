@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from covid import Covid
 import csv
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.title('Covid 19, a worldwide analysis')
 st.text('Source: Johns Hopkins University')
@@ -32,5 +34,13 @@ if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(data)
 
+st.header('Cases in Top 10 countries')
 data_head = data.head(10)
-# st.write(data_head)
+if st.checkbox('Show Table'):
+    st.subheader('Raw data')
+    st.write(data_head)
+labels = data_head['country']
+confirmed = data_head['confirmed']
+st.subheader('Confirmed cases')
+fig = go.Figure(data=[go.Pie(labels=labels, values=confirmed, textinfo='label+percent')])
+st.write(fig)
