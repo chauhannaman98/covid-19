@@ -16,7 +16,7 @@ covid = Covid()
 countries = covid.list_countries()
 
 @st.cache
-def generate_csv_data():
+def fetch_data():
   country_list = []
   for country in countries:
     country_list.append(covid.get_status_by_country_name(country['name']))
@@ -27,7 +27,7 @@ def generate_csv_data():
     dict_writer.writeheader()
     dict_writer.writerows(country_list)
 
-generate_csv_data()
+fetch_data()
 
 data = pd.read_csv('covid.csv')
 if st.checkbox('Show raw data'):
@@ -37,10 +37,17 @@ if st.checkbox('Show raw data'):
 st.header('Cases in Top 10 countries')
 data_head = data.head(10)
 if st.checkbox('Show Table'):
-    st.subheader('Raw data')
+    st.subheader('Top 10 countries')
     st.write(data_head)
 labels = data_head['country']
 confirmed = data_head['confirmed']
 st.subheader('Confirmed cases')
 fig = go.Figure(data=[go.Pie(labels=labels, values=confirmed, textinfo='label+percent')])
 st.write(fig)
+
+active_cases = data_head['active']
+st.subheader('Active cases')
+fig = go.Figure(data=[go.Pie(labels=labels, values=active_cases, textinfo='label+percent')])
+st.write(fig)
+
+
